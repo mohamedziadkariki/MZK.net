@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>محمد زياد كريكي</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 25px;
+      border-radius: 20px;
+      width: 320px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    a {
+      display: block;
+      margin: 8px 0;
+      color: #00c3ff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .phone {
+      margin: 10px 0 20px;
+      font-size: 15px;
+    }
+    .game {
+      background: #111;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #00c3ff;
+      color: black;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>سلام 👋 أنا إسمي محمد زياد كريكي</h1>
+
+    <a href="https://www.instagram.com/mohamed_ziad_kariki?igsh=MXRjOW5pMnJ2bHRtcg==" target="_blank">
+      Instagram
+    </a>
+
+    <a href="https://www.youtube.com/@MohamedziadkarikiMZK" target="_blank">
+      YouTube
+    </a>
+
+    <div class="phone">📱 0620-300806</div>
+    <!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Game 100</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+    .container {
+      background: rgba(0,0,0,0.55);
+      padding: 25px;
+      border-radius: 20px;
+      width: 320px;
+      text-align: center;
+    }
+    .shake {
+      animation: shake 0.3s infinite;
+    }
+    @keyframes shake {
+      0% { transform: translate(0); }
+      25% { transform: translate(-2px, 2px); }
+      50% { transform: translate(2px, -2px); }
+      75% { transform: translate(-2px, -2px); }
+      100% { transform: translate(2px, 2px); }
+    }
+    .game {
+      background: #111;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #00c3ff;
+      color: black;
+      margin-top: 10px;
+    }
+    .celebration {
+      display: none;
+      font-size: 18px;
+      margin-top: 12px;
+      color: #00ff99;
+    }
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="container">
+    <h2>🎯 الهدف: 100 نقطة</h2>
+
+    <div class="game">
+      <p>النقاط: <span id="score">0</span> / 100</p>
+      <p>⏱ الوقت: <span id="time">15</span>s</p>
+
+      <button id="startBtn">إبدأ</button>
+      <button id="clickBtn">إضغط</button>
+
+      <div class="celebration" id="celebration">
+        🎉 مبروك! وصلتي لـ 100 🎉
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="C:\Users\QEF\Downloads\WhatsApp Audio 2026-01-18 at 6.55.56 PM.aac" loop></audio>
+
+  <script>
+    let score = 0;
+    let time = 15;
+    let timer = null;
+    let gameActive = false;
+
+    const scoreEl = document.getElementById("score");
+    const timeEl = document.getElementById("time");
+    const celebration = document.getElementById("celebration");
+    const music = document.getElementById("bgMusic");
+    const container = document.getElementById("container");
+    const startBtn = document.getElementById("startBtn");
+    const clickBtn = document.getElementById("clickBtn");
+
+    startBtn.addEventListener("click", function() {
+      // أول تفاعل بشري قبل الصوت
+      music.play().catch(()=>{}); 
+      startGame();
+    });
+
+    clickBtn.addEventListener("click", addPoint);
+
+    function startGame() {
+      score = 0;
+      time = 15;
+      gameActive = true;
+      scoreEl.textContent = score;
+      timeEl.textContent = time;
+      celebration.style.display = "none";
+      container.classList.remove("shake");
+
+      if (timer) clearInterval(timer);
+
+      timer = setInterval(() => {
+        time--;
+        timeEl.textContent = time;
+
+        if (time <= 5 && time > 0) {
+          container.classList.add("shake");
+          if (navigator.vibrate) navigator.vibrate(200);
+        }
+
+        if (time === 0) {
+          clearInterval(timer);
+          gameActive = false;
+          music.pause();
+          container.classList.remove("shake");
+          alert("⏱ سالا الوقت! النقاط ديالك: " + score);
+        }
+      }, 1000);
+    }
+
+    function addPoint() {
+      if (!gameActive) return;
+
+      if (score < 100) {
+        score++;
+        scoreEl.textContent = score;
+      }
+
+      if (score === 100) {
+        clearInterval(timer);
+        gameActive = false;
+        music.pause();
+        container.classList.remove("shake");
+        celebration.style.display = "block";
+        launchConfetti();
+      }
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 120; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = HTMLSlotElement
+        c.style.animationDuration = (Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),4000);
+      }
+    }
+  </script>
+</body>
+</html>
